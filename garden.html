@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knowledge Garden — Knowledge Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">
+        <div class="logo-icon">K</div>
+        <span>Knowledge Hub</span>
+      </a>
+      <nav>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Explore</a></li>
+          <li><a href="article.html">Articles</a></li>
+          <li><a href="garden.html" class="active">Garden</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="search-trigger" id="searchTrigger" aria-label="Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <span>Search</span>
+          <kbd>/</kbd>
+        </button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="theme-icon">&#9790;</span>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Search Modal -->
+  <div class="search-modal" id="searchModal">
+    <div class="search-box">
+      <div class="search-input-wrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search articles, topics, concepts...">
+      </div>
+      <div class="search-results" id="searchResults">
+        <div class="search-empty">Type to search across all articles and knowledge notes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Garden Hero -->
+  <section class="garden-hero">
+    <div class="garden-hero-content">
+      <div class="hero-badge">
+        <span>&#127793;</span> Digital Garden
+      </div>
+      <h1>Knowledge Garden</h1>
+      <p>An interconnected web of ideas, growing and evolving over time. Explore the relationships between concepts through this interactive graph.</p>
+      <div class="garden-legend-inline">
+        <div class="legend-item"><div class="legend-dot" style="background:#6d28d9"></div> AI / ML</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div> Mathematics</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#059669"></div> Physics</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ea580c"></div> Philosophy</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#db2777"></div> Computer Science</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Graph -->
+  <section class="section" style="padding-top:0">
+    <div class="graph-toolbar">
+      <div class="graph-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="ai">AI / ML</button>
+        <button class="filter-btn" data-filter="math">Mathematics</button>
+        <button class="filter-btn" data-filter="physics">Physics</button>
+        <button class="filter-btn" data-filter="philosophy">Philosophy</button>
+        <button class="filter-btn" data-filter="cs">Computer Science</button>
+      </div>
+      <div class="graph-view-toggle">
+        <button class="view-btn active" data-view="graph" title="Graph view">&#9673; Graph</button>
+        <button class="view-btn" data-view="grid" title="Grid view">&#9638; Grid</button>
+      </div>
+    </div>
+
+    <div class="graph-container" id="graphView">
+      <canvas id="knowledge-graph"></canvas>
+      <div class="graph-tooltip" id="graphTooltip" style="display:none">
+        <h4 id="tooltipTitle"></h4>
+        <p id="tooltipDesc"></p>
+        <div id="tooltipMeta"></div>
+      </div>
+      <div class="graph-hint">Click and drag nodes. Scroll to zoom. Click a node to see details.</div>
+    </div>
+
+    <!-- Grid View (hidden by default) -->
+    <div class="garden-grid-view" id="gridView" style="display:none">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Node Detail Panel -->
+    <div class="node-detail-panel" id="nodeDetail" style="display:none">
+      <button class="detail-close" id="detailClose">&times;</button>
+      <div class="detail-header">
+        <h2 id="detailTitle">Self-Attention</h2>
+        <span class="growth-indicator" id="detailGrowth">&#9679; Evergreen</span>
+      </div>
+      <p id="detailDesc" class="detail-desc">The core mechanism behind transformers...</p>
+      <div class="detail-connections">
+        <h4>Connected Concepts</h4>
+        <div id="detailConnections" class="detail-tags"></div>
+      </div>
+      <a href="article.html" class="read-more-btn" style="margin-top:1rem">Read Article &rarr;</a>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="section">
+    <div class="garden-stats">
+      <div class="garden-stat-card">
+        <div class="stat-icon">&#127793;</div>
+        <div class="stat-number">18</div>
+        <div class="stat-label">Seedlings</div>
+        <p>Early ideas being explored</p>
+      </div>
+      <div class="garden-stat-card">
+        <div class="stat-icon">&#127807;</div>
+        <div class="stat-number">14</div>
+        <div class="stat-label">Budding</div>
+        <p>Growing and connecting</p>
+      </div>
+      <div class="garden-stat-card">
+        <div class="stat-icon">&#127795;</div>
+        <div class="stat-number">15</div>
+        <div class="stat-label">Evergreen</div>
+        <p>Well-developed concepts</p>
+      </div>
+      <div class="garden-stat-card">
+        <div class="stat-icon">&#128279;</div>
+        <div class="stat-number">342</div>
+        <div class="stat-label">Connections</div>
+        <p>Links between ideas</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="site-logo">
+          <div class="logo-icon">K</div>
+          <span>Knowledge Hub</span>
+        </a>
+        <p>A personal knowledge channel blending academic depth with interactive exploration.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Content</h4>
+        <ul>
+          <li><a href="article.html">Articles</a></li>
+          <li><a href="garden.html">Knowledge Garden</a></li>
+          <li><a href="#">Reading List</a></li>
+          <li><a href="#">Papers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Topics</h4>
+        <ul>
+          <li><a href="#">Machine Learning</a></li>
+          <li><a href="#">Mathematics</a></li>
+          <li><a href="#">Physics</a></li>
+          <li><a href="#">Philosophy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">Twitter / X</a></li>
+          <li><a href="#">RSS Feed</a></li>
+          <li><a href="#">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Knowledge Hub. Built with curiosity.</span>
+      <span>Inspired by Gwern, Ciechanowski, Distill.pub</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attention Is All You Need — Knowledge Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Reading Progress -->
+  <div class="reading-progress" id="readingProgress"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">
+        <div class="logo-icon">K</div>
+        <span>Knowledge Hub</span>
+      </a>
+      <nav>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Explore</a></li>
+          <li><a href="article.html" class="active">Articles</a></li>
+          <li><a href="garden.html">Garden</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="search-trigger" id="searchTrigger" aria-label="Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <span>Search</span>
+          <kbd>/</kbd>
+        </button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="theme-icon">&#9790;</span>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Search Modal -->
+  <div class="search-modal" id="searchModal">
+    <div class="search-box">
+      <div class="search-input-wrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search articles, topics, concepts...">
+      </div>
+      <div class="search-results" id="searchResults">
+        <div class="search-empty">Type to search across all articles and knowledge notes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article Header -->
+  <div class="article-hero-banner">
+    <div class="article-hero-bg">
+      <canvas id="articleHeroCanvas"></canvas>
+    </div>
+    <div class="article-hero-content">
+      <div class="card-tags">
+        <span class="tag tag-purple">Deep Learning</span>
+        <span class="tag tag-blue">Mathematics</span>
+        <span class="tag tag-green">Interactive</span>
+      </div>
+      <h1>Attention Is All You Need:<br>A Visual & Interactive Exploration</h1>
+      <p class="article-hero-subtitle">Understanding the Transformer architecture through interactive visualizations, step-by-step matrix operations, and real-time demonstrations.</p>
+      <div class="article-meta-bar">
+        <div class="author-info">
+          <div class="author-avatar">KH</div>
+          <span>Knowledge Hub</span>
+        </div>
+        <span>March 15, 2026</span>
+        <span>25 min read</span>
+        <span class="growth-indicator">&#9679; Evergreen</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article Layout -->
+  <div class="article-layout">
+    <!-- Table of Contents -->
+    <aside class="toc-sidebar">
+      <div class="toc-title">On This Page</div>
+      <ul class="toc-list" id="tocList">
+        <li><a href="#introduction" class="active">Introduction</a></li>
+        <li><a href="#background">Background</a></li>
+        <li><a href="#self-attention">Self-Attention Mechanism</a></li>
+        <li><a href="#math" class="toc-h3">Mathematical Formulation</a></li>
+        <li><a href="#visualization" class="toc-h3">Interactive Visualization</a></li>
+        <li><a href="#multi-head">Multi-Head Attention</a></li>
+        <li><a href="#architecture">Full Architecture</a></li>
+        <li><a href="#code">Implementation</a></li>
+        <li><a href="#references">References</a></li>
+      </ul>
+    </aside>
+
+    <!-- Article Content -->
+    <article class="article-content prose" id="articleContent">
+
+      <h2 id="introduction">Introduction</h2>
+      <p>
+        The Transformer architecture, introduced by Vaswani et al. in 2017, fundamentally changed how we think about sequence modeling. Unlike recurrent neural networks (RNNs) which process tokens sequentially, Transformers process all positions in parallel using a mechanism called <strong>self-attention</strong>.
+      </p>
+      <p>
+        In this article, we'll build up an understanding of the Transformer from first principles, using interactive visualizations to make the abstract concrete. Every diagram below is interactive — drag, hover, and adjust parameters to build your intuition.
+      </p>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">&#x1F4A1;</span>
+        <div>
+          <strong>Interactive elements</strong> — Look for controls below each visualization. Drag tokens, adjust weights, and watch how attention patterns change in real time.
+        </div>
+      </div>
+
+      <h2 id="background">Background: Why Attention?</h2>
+      <p>
+        Before Transformers, the dominant approach to sequence modeling was the encoder-decoder architecture with RNNs. The key problem was the <em>information bottleneck</em>: the entire input sequence had to be compressed into a single fixed-length vector.
+      </p>
+      <p>
+        Attention mechanisms were first introduced as a way to let the decoder "look back" at different parts of the input. But the Transformer paper asked a radical question: <em>what if attention is all we need?</em>
+      </p>
+
+      <blockquote>
+        The dominant sequence transduction models are based on complex recurrent or convolutional neural networks. We propose a new simple network architecture based solely on attention mechanisms.
+      </blockquote>
+
+      <h2 id="self-attention">Self-Attention Mechanism</h2>
+      <p>
+        Self-attention allows each position in a sequence to attend to all other positions. For each token, we compute three vectors: a <strong>Query</strong> (Q), a <strong>Key</strong> (K), and a <strong>Value</strong> (V).
+      </p>
+
+      <h3 id="math">Mathematical Formulation</h3>
+      <p>
+        The attention function maps a query and a set of key-value pairs to an output. The output is a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key:
+      </p>
+
+      <div class="math-block" id="mathBlock1">
+        <!-- KaTeX will render here -->
+        <span class="math-placeholder">Attention(Q, K, V) = softmax(QK<sup>T</sup> / &radic;d<sub>k</sub>) V</span>
+      </div>
+
+      <p>
+        Where <code>d_k</code> is the dimension of the key vectors. The scaling factor <code>1/&radic;d_k</code> prevents the dot products from growing too large, which would push the softmax into regions with extremely small gradients.
+      </p>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">&#x2139;&#xFE0F;</span>
+        <div>
+          <strong>Why scale?</strong> — For large values of d<sub>k</sub>, the dot products grow large in magnitude, pushing softmax into regions where it has extremely small gradients. The 1/&radic;d<sub>k</sub> factor counteracts this.
+        </div>
+      </div>
+
+      <h3 id="visualization">Interactive Visualization</h3>
+      <p>
+        Below is an interactive attention map. Hover over any cell to see the attention weight between two tokens. Adjust the temperature slider to see how it affects the distribution sharpness.
+      </p>
+
+      <!-- Interactive Attention Heatmap -->
+      <div class="interactive-figure">
+        <canvas class="figure-canvas" id="attentionCanvas"></canvas>
+        <div class="figure-controls">
+          <div class="demo-control">
+            <label>Temperature</label>
+            <input type="range" id="tempSlider" min="1" max="100" value="50">
+          </div>
+          <div class="demo-control">
+            <label>Heads</label>
+            <input type="range" id="headSlider" min="1" max="8" value="4">
+          </div>
+        </div>
+        <div class="figure-caption">
+          Fig 1. Attention weights between tokens in the sentence "The cat sat on the mat". Hover to inspect individual weights.
+        </div>
+      </div>
+
+      <h2 id="multi-head">Multi-Head Attention</h2>
+      <p>
+        Instead of performing a single attention function, the Transformer linearly projects Q, K, and V multiple times with different learned projections. This allows the model to jointly attend to information from different representation subspaces:
+      </p>
+
+      <div class="math-block">
+        <span class="math-placeholder">MultiHead(Q, K, V) = Concat(head<sub>1</sub>, ..., head<sub>h</sub>) W<sup>O</sup></span>
+      </div>
+
+      <p>
+        Each "head" captures different types of relationships. For example, one head might learn syntactic dependencies while another captures semantic similarities.
+      </p>
+
+      <h2 id="architecture">Full Transformer Architecture</h2>
+      <p>
+        The full Transformer consists of an encoder and decoder, each made up of stacked layers. Each encoder layer has two sub-layers: multi-head self-attention and a position-wise feed-forward network. Each decoder layer adds a third sub-layer that performs multi-head attention over the encoder output.
+      </p>
+
+      <!-- Architecture Diagram -->
+      <div class="interactive-figure">
+        <canvas class="figure-canvas" id="architectureCanvas" style="height:400px"></canvas>
+        <div class="figure-caption">
+          Fig 2. The Transformer architecture. Click on any component to see its details. Encoder on the left, decoder on the right.
+        </div>
+      </div>
+
+      <p>
+        Key innovations in the architecture include:
+      </p>
+      <ul>
+        <li><strong>Residual connections</strong> around each sub-layer, followed by layer normalization</li>
+        <li><strong>Positional encoding</strong> using sinusoidal functions to inject sequence order information</li>
+        <li><strong>Masked attention</strong> in the decoder to prevent attending to future positions</li>
+      </ul>
+
+      <h2 id="code">Implementation</h2>
+      <p>Here's a minimal self-attention implementation in Python:</p>
+
+      <div class="code-block-header">
+        <span>python &mdash; self_attention.py</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <pre><code>import numpy as np
+
+def self_attention(Q, K, V, mask=None):
+    """Scaled dot-product attention."""
+    d_k = Q.shape[-1]
+
+    # Compute attention scores
+    scores = Q @ K.transpose(-2, -1) / np.sqrt(d_k)
+
+    # Apply mask (for decoder)
+    if mask is not None:
+        scores = scores + (mask * -1e9)
+
+    # Softmax to get attention weights
+    weights = softmax(scores, axis=-1)
+
+    # Weighted sum of values
+    output = weights @ V
+    return output, weights
+
+def softmax(x, axis=-1):
+    e_x = np.exp(x - np.max(x, axis=axis, keepdims=True))
+    return e_x / np.sum(e_x, axis=axis, keepdims=True)</code></pre>
+
+      <div class="callout callout-warning">
+        <span class="callout-icon">&#x26A0;&#xFE0F;</span>
+        <div>
+          <strong>Note:</strong> This is a simplified implementation for educational purposes. Production implementations use PyTorch/JAX with GPU-optimized kernels like FlashAttention.
+        </div>
+      </div>
+
+      <h2 id="references">References</h2>
+      <div class="references-list">
+        <div class="reference-item">
+          <span class="ref-number">[1]</span>
+          <span>Vaswani, A., et al. "Attention Is All You Need." <em>NeurIPS</em> 2017.</span>
+        </div>
+        <div class="reference-item">
+          <span class="ref-number">[2]</span>
+          <span>Bahdanau, D., Cho, K., & Bengio, Y. "Neural Machine Translation by Jointly Learning to Align and Translate." <em>ICLR</em> 2015.</span>
+        </div>
+        <div class="reference-item">
+          <span class="ref-number">[3]</span>
+          <span>Dao, T., et al. "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness." <em>NeurIPS</em> 2022.</span>
+        </div>
+        <div class="reference-item">
+          <span class="ref-number">[4]</span>
+          <span>Elhage, N., et al. "A Mathematical Framework for Transformer Circuits." <em>Anthropic</em> 2021.</span>
+        </div>
+      </div>
+
+      <!-- Article Footer / Share -->
+      <div class="article-footer-actions">
+        <div class="share-section">
+          <span class="share-label">Share this article</span>
+          <div class="share-buttons">
+            <button class="share-btn" title="Copy link" onclick="copyArticleLink(this)">&#128279; Link</button>
+            <button class="share-btn" title="Twitter">&#120143; Twitter</button>
+          </div>
+        </div>
+        <div class="article-nav">
+          <a href="#" class="article-nav-link prev">
+            <span class="nav-dir">&larr; Previous</span>
+            <span class="nav-title">Shannon Entropy Demystified</span>
+          </a>
+          <a href="#" class="article-nav-link next">
+            <span class="nav-dir">Next &rarr;</span>
+            <span class="nav-title">The Geometry of Gradient Descent</span>
+          </a>
+        </div>
+      </div>
+
+    </article>
+
+    <!-- Right sidebar / sidenotes area -->
+    <aside class="right-sidebar">
+      <div class="sidenote" style="margin-top: 8rem">
+        The original paper was authored by eight researchers at Google Brain and Google Research. It has been cited over 100,000 times.
+      </div>
+      <div class="sidenote" style="margin-top: 12rem">
+        The name "Transformer" comes from the model's ability to transform one sequence into another, not from the electrical component.
+      </div>
+      <div class="sidenote" style="margin-top: 18rem">
+        The &radic;d<sub>k</sub> scaling was a simple but crucial insight. Without it, training becomes unstable for large models.
+      </div>
+    </aside>
+  </div>
+
+  <!-- Comments Section -->
+  <div class="comments-section">
+    <h3>Discussion</h3>
+    <div class="comments-placeholder">
+      <div class="comment-mock">
+        <div class="comment-header">
+          <div class="author-avatar" style="width:28px;height:28px;font-size:10px">AL</div>
+          <strong>Alice L.</strong>
+          <span class="comment-time">2 days ago</span>
+        </div>
+        <p>The interactive attention heatmap really helped me understand why scaling matters. Would love to see a similar visualization for cross-attention in the decoder!</p>
+        <div class="comment-actions">
+          <button class="comment-action-btn">&#9650; 12</button>
+          <button class="comment-action-btn">Reply</button>
+        </div>
+      </div>
+      <div class="comment-mock">
+        <div class="comment-header">
+          <div class="author-avatar" style="width:28px;height:28px;font-size:10px;background:linear-gradient(135deg,#059669,#10b981)">BW</div>
+          <strong>Bob W.</strong>
+          <span class="comment-time">1 day ago</span>
+        </div>
+        <p>Great writeup! Minor note: in the code example, you might want to mention that the real implementations use causal masking for autoregressive generation.</p>
+        <div class="comment-actions">
+          <button class="comment-action-btn">&#9650; 8</button>
+          <button class="comment-action-btn">Reply</button>
+        </div>
+      </div>
+      <div class="add-comment">
+        <textarea placeholder="Join the discussion... (Powered by GitHub Discussions)" rows="3"></textarea>
+        <button class="read-more-btn" style="margin-top:0.75rem">Post Comment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="site-logo">
+          <div class="logo-icon">K</div>
+          <span>Knowledge Hub</span>
+        </a>
+        <p>A personal knowledge channel blending academic depth with interactive exploration.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Content</h4>
+        <ul>
+          <li><a href="article.html">Articles</a></li>
+          <li><a href="garden.html">Knowledge Garden</a></li>
+          <li><a href="#">Reading List</a></li>
+          <li><a href="#">Papers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Topics</h4>
+        <ul>
+          <li><a href="#">Machine Learning</a></li>
+          <li><a href="#">Mathematics</a></li>
+          <li><a href="#">Physics</a></li>
+          <li><a href="#">Philosophy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">Twitter / X</a></li>
+          <li><a href="#">RSS Feed</a></li>
+          <li><a href="#">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Knowledge Hub. Built with curiosity.</span>
+      <span>Inspired by Gwern, Ciechanowski, Distill.pub</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knowledge Hub — Personal Academic Knowledge Channel</title>
+  <meta name="description" content="A personal knowledge sharing channel blending academic rigor with interactive exploration">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- KaTeX for math -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Main styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Reading Progress -->
+  <div class="reading-progress" id="readingProgress"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">
+        <div class="logo-icon">K</div>
+        <span>Knowledge Hub</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html" class="active">Explore</a></li>
+          <li><a href="article.html">Articles</a></li>
+          <li><a href="garden.html">Garden</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="search-trigger" id="searchTrigger" aria-label="Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <span>Search</span>
+          <kbd>/</kbd>
+        </button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="theme-icon">&#9790;</span>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Search Modal -->
+  <div class="search-modal" id="searchModal">
+    <div class="search-box">
+      <div class="search-input-wrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search articles, topics, concepts..." autofocus>
+      </div>
+      <div class="search-results" id="searchResults">
+        <div class="search-empty">Type to search across all articles and knowledge notes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-particles">
+      <div class="particle" style="left:40%;top:25%"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span>&#9670;</span> Personal Knowledge Channel
+      </div>
+      <h1>
+        Exploring Ideas at the<br>
+        <span class="gradient-text">Intersection of Science & Curiosity</span>
+      </h1>
+      <p class="hero-subtitle">
+        A digital garden where academic rigor meets interactive exploration.
+        Dive into deep dives on AI, mathematics, physics, and the philosophy of science.
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="number" data-count="47">0</div>
+          <div class="label">Articles</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number" data-count="128">0</div>
+          <div class="label">Notes</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number" data-count="12">0</div>
+          <div class="label">Topics</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number" data-count="342">0</div>
+          <div class="label">Connections</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Article -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Featured</h2>
+    </div>
+
+    <a href="article.html" class="featured-card fade-in">
+      <div class="featured-visual">
+        <canvas id="neuralCanvas"></canvas>
+      </div>
+      <div class="featured-body">
+        <div class="card-tags">
+          <span class="tag tag-purple">Deep Learning</span>
+          <span class="tag tag-blue">Mathematics</span>
+          <span class="tag tag-green">Interactive</span>
+        </div>
+        <h3 class="card-title">Attention Is All You Need: A Visual & Interactive Exploration</h3>
+        <p class="card-excerpt">
+          An interactive deep dive into the Transformer architecture. Understand self-attention mechanisms through draggable visualizations, step-by-step matrix operations, and real-time demonstrations of how language models process sequences.
+        </p>
+        <div class="card-meta">
+          <div class="card-meta-left">
+            <span>March 15, 2026</span>
+            <span>&middot;</span>
+            <span>25 min read</span>
+          </div>
+          <span class="growth-indicator">&#9679; Evergreen</span>
+        </div>
+        <div style="margin-top:1.25rem">
+          <span class="read-more-btn">Read Article &rarr;</span>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  <!-- Interactive Demo -->
+  <section class="section">
+    <div class="demo-section fade-in">
+      <div class="demo-header">
+        <h2>Interactive Playground</h2>
+        <p>Explore concepts through live, interactive visualizations</p>
+      </div>
+      <div class="demo-tabs">
+        <button class="demo-tab active" data-demo="wave">Wave Interference</button>
+        <button class="demo-tab" data-demo="fourier">Fourier Transform</button>
+        <button class="demo-tab" data-demo="attractor">Strange Attractor</button>
+      </div>
+      <div class="demo-canvas-wrap">
+        <canvas id="demo-canvas"></canvas>
+        <div class="demo-controls">
+          <div class="demo-control">
+            <label>Frequency</label>
+            <input type="range" id="param1" min="1" max="20" value="5">
+          </div>
+          <div class="demo-control">
+            <label>Amplitude</label>
+            <input type="range" id="param2" min="1" max="100" value="50">
+          </div>
+          <div class="demo-control">
+            <label>Phase</label>
+            <input type="range" id="param3" min="0" max="628" value="0">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Articles -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Recent Articles</h2>
+      <a href="#" class="section-link">View all &rarr;</a>
+    </div>
+
+    <div class="articles-grid stagger-children">
+      <a href="article.html" class="article-card">
+        <div class="card-image" style="background: linear-gradient(135deg, #dbeafe, #ede9fe)">
+          <span class="card-icon">&#x1D6BB;</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-blue">Information Theory</span>
+          </div>
+          <h3 class="card-title">Shannon Entropy Demystified: From Bits to Neural Networks</h3>
+          <p class="card-excerpt">Understanding information theory from first principles, with interactive visualizations of entropy, mutual information, and KL divergence.</p>
+          <div class="card-meta">
+            <div class="card-meta-left">
+              <span>March 10, 2026</span>
+              <span>&middot;</span>
+              <span>18 min</span>
+            </div>
+            <span class="growth-indicator">&#9679; Evergreen</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="article.html" class="article-card">
+        <div class="card-image" style="background: linear-gradient(135deg, #fce7f3, #faf5ff)">
+          <span class="card-icon">&#x2207;</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-pink">Optimization</span>
+            <span class="tag tag-purple">Mathematics</span>
+          </div>
+          <h3 class="card-title">The Geometry of Gradient Descent</h3>
+          <p class="card-excerpt">Visualizing loss landscapes in 3D. Drag to rotate, scroll to zoom, watch gradient descent navigate saddle points and local minima in real time.</p>
+          <div class="card-meta">
+            <div class="card-meta-left">
+              <span>Feb 28, 2026</span>
+              <span>&middot;</span>
+              <span>22 min</span>
+            </div>
+            <span class="growth-indicator budding">&#9679; Budding</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="article.html" class="article-card">
+        <div class="card-image" style="background: linear-gradient(135deg, #dcfce7, #f0fdf4)">
+          <span class="card-icon">&#x222B;</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-green">Bayesian</span>
+            <span class="tag tag-orange">Statistics</span>
+          </div>
+          <h3 class="card-title">Bayesian Thinking for Scientists</h3>
+          <p class="card-excerpt">A practical guide to Bayesian inference with interactive prior-posterior visualizations. Drag the prior, see how evidence updates your beliefs.</p>
+          <div class="card-meta">
+            <div class="card-meta-left">
+              <span>Feb 15, 2026</span>
+              <span>&middot;</span>
+              <span>15 min</span>
+            </div>
+            <span class="growth-indicator seedling">&#9679; Seedling</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="article.html" class="article-card">
+        <div class="card-image" style="background: linear-gradient(135deg, #ffedd5, #fef3c7)">
+          <span class="card-icon">&#x03C8;</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-orange">Quantum</span>
+            <span class="tag tag-blue">Physics</span>
+          </div>
+          <h3 class="card-title">Quantum Computing: Beyond the Hype</h3>
+          <p class="card-excerpt">What can quantum computers actually do? Interactive Bloch sphere, circuit builder, and honest analysis of quantum advantage claims.</p>
+          <div class="card-meta">
+            <div class="card-meta-left">
+              <span>Jan 30, 2026</span>
+              <span>&middot;</span>
+              <span>30 min</span>
+            </div>
+            <span class="growth-indicator">&#9679; Evergreen</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="article.html" class="article-card">
+        <div class="card-image" style="background: linear-gradient(135deg, #e0e7ff, #eef2ff)">
+          <span class="card-icon">&#x29D6;</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-purple">Category Theory</span>
+          </div>
+          <h3 class="card-title">Category Theory for Programmers: A Gentle Introduction</h3>
+          <p class="card-excerpt">Functors, monads, and natural transformations explained with code. Interactive commutative diagrams you can build yourself.</p>
+          <div class="card-meta">
+            <div class="card-meta-left">
+              <span>Jan 12, 2026</span>
+              <span>&middot;</span>
+              <span>35 min</span>
+            </div>
+            <span class="growth-indicator budding">&#9679; Budding</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="article.html" class="article-card">
+        <div class="card-image" style="background: linear-gradient(135deg, #fef9c3, #fef3c7)">
+          <span class="card-icon">&#x2696;</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-orange">Philosophy</span>
+            <span class="tag tag-green">AI Ethics</span>
+          </div>
+          <h3 class="card-title">The Alignment Problem: Notes from the Field</h3>
+          <p class="card-excerpt">A survey of current AI alignment approaches, with interactive decision trees mapping the landscape of safety research.</p>
+          <div class="card-meta">
+            <div class="card-meta-left">
+              <span>Dec 28, 2025</span>
+              <span>&middot;</span>
+              <span>20 min</span>
+            </div>
+            <span class="growth-indicator">&#9679; Evergreen</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Knowledge Garden Preview -->
+  <section class="garden-section">
+    <div class="section-header">
+      <h2 class="section-title">Knowledge Garden</h2>
+      <a href="garden.html" class="section-link">Explore graph &rarr;</a>
+    </div>
+    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: var(--font-size-sm)">
+      Ideas grow like plants. Some are seedlings, some are budding, some are evergreen. Click any node to explore.
+    </p>
+
+    <div class="garden-grid stagger-children">
+      <div class="garden-node" onclick="location.href='article.html'">
+        <div class="garden-node-header">
+          <h4>Self-Attention</h4>
+          <span class="growth-indicator">&#9679;</span>
+        </div>
+        <p>The core mechanism behind transformers. Maps queries to keys to compute relevance.</p>
+        <div class="node-connections">
+          <div class="node-dot"></div><div class="node-dot"></div><div class="node-dot"></div><div class="node-dot"></div><div class="node-dot"></div>
+        </div>
+      </div>
+
+      <div class="garden-node" onclick="location.href='article.html'">
+        <div class="garden-node-header">
+          <h4>Entropy</h4>
+          <span class="growth-indicator">&#9679;</span>
+        </div>
+        <p>The measure of uncertainty. Connects information theory, thermodynamics, and ML.</p>
+        <div class="node-connections">
+          <div class="node-dot"></div><div class="node-dot"></div><div class="node-dot"></div>
+        </div>
+      </div>
+
+      <div class="garden-node" onclick="location.href='article.html'">
+        <div class="garden-node-header">
+          <h4>Backpropagation</h4>
+          <span class="growth-indicator budding">&#9679;</span>
+        </div>
+        <p>How neural networks learn. Chain rule applied at scale through computational graphs.</p>
+        <div class="node-connections">
+          <div class="node-dot"></div><div class="node-dot"></div><div class="node-dot"></div><div class="node-dot"></div>
+        </div>
+      </div>
+
+      <div class="garden-node" onclick="location.href='article.html'">
+        <div class="garden-node-header">
+          <h4>Bayes' Theorem</h4>
+          <span class="growth-indicator seedling">&#9679;</span>
+        </div>
+        <p>Updating beliefs with evidence. The foundation of probabilistic reasoning.</p>
+        <div class="node-connections">
+          <div class="node-dot"></div><div class="node-dot"></div>
+        </div>
+      </div>
+
+      <div class="garden-node" onclick="location.href='article.html'">
+        <div class="garden-node-header">
+          <h4>Loss Landscapes</h4>
+          <span class="growth-indicator budding">&#9679;</span>
+        </div>
+        <p>The topography of optimization. Why some landscapes are harder to navigate.</p>
+        <div class="node-connections">
+          <div class="node-dot"></div><div class="node-dot"></div><div class="node-dot"></div>
+        </div>
+      </div>
+
+      <div class="garden-node" onclick="location.href='article.html'">
+        <div class="garden-node-header">
+          <h4>Kolmogorov Complexity</h4>
+          <span class="growth-indicator seedling">&#9679;</span>
+        </div>
+        <p>The shortest program that produces a string. Connects computation and information.</p>
+        <div class="node-connections">
+          <div class="node-dot"></div>
+        </div>
+      </div>
+
+      <div class="garden-node" onclick="location.href='article.html'">
+        <div class="garden-node-header">
+          <h4>Fourier Analysis</h4>
+          <span class="growth-indicator">&#9679;</span>
+        </div>
+        <p>Decomposing signals into frequencies. Ubiquitous in physics, engineering, and ML.</p>
+        <div class="node-connections">
+          <div class="node-dot"></div><div class="node-dot"></div><div class="node-dot"></div><div class="node-dot"></div>
+        </div>
+      </div>
+
+      <div class="garden-node" onclick="location.href='article.html'">
+        <div class="garden-node-header">
+          <h4>RLHF</h4>
+          <span class="growth-indicator budding">&#9679;</span>
+        </div>
+        <p>Training AI with human feedback. The technique behind ChatGPT alignment.</p>
+        <div class="node-connections">
+          <div class="node-dot"></div><div class="node-dot"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="site-logo">
+          <div class="logo-icon">K</div>
+          <span>Knowledge Hub</span>
+        </a>
+        <p>A personal knowledge channel blending academic depth with interactive exploration. Built with curiosity and care.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Content</h4>
+        <ul>
+          <li><a href="article.html">Articles</a></li>
+          <li><a href="garden.html">Knowledge Garden</a></li>
+          <li><a href="#">Reading List</a></li>
+          <li><a href="#">Papers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Topics</h4>
+        <ul>
+          <li><a href="#">Machine Learning</a></li>
+          <li><a href="#">Mathematics</a></li>
+          <li><a href="#">Physics</a></li>
+          <li><a href="#">Philosophy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">Twitter / X</a></li>
+          <li><a href="#">RSS Feed</a></li>
+          <li><a href="#">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Knowledge Hub. Built with curiosity.</span>
+      <span>Inspired by Gwern, Ciechanowski, Distill.pub</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+</body>
+</html>
